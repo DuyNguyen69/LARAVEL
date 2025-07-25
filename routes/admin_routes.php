@@ -3,6 +3,7 @@
 use App\Http\Controllers\admin\RentalController;
 use App\Http\Controllers\Client\GoogleController;
 use App\Http\Controllers\Admin\VehicleController;
+use App\Http\Controllers\Auth\UserController;
 use App\Http\Middleware\CheckIsAdmin;
 use Illuminate\Support\Facades\Route;
 
@@ -42,4 +43,7 @@ Route::prefix('admin')
         Route::post('rentals/{rental}/calculate-total', 'calculateTotalAjax')->name('calculateTotal');
         Route::put('rentals/{rental}/payment', 'markAsPaid')->name('markAsPaid');
         Route::put('rentals/{rental}/cancel', 'cancel')->name('cancel');
+        Route::get('payments','showPayment')->name('payments.index');
+
     });
+Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index')->middleware(CheckIsAdmin::class);

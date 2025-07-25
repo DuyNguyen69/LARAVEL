@@ -88,12 +88,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="">
+                  <a class="nav-link pl-3" href="{{ route('admin.rentals.payments.index') }}">
                     <span class="ml-1 item-text">Payment</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link pl-3" href="">
+                  <a class="nav-link pl-3" href="{{ route('admin.vehicle.trash') }}">
                     <span class="ml-1 item-text">Recycle</span>
                   </a>
                 </li>
@@ -105,7 +105,7 @@
                 <span class="ml-3 item-text">Authentication</span>
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="auth">
-                <a class="nav-link pl-3" href="./auth-login.html"><span class="ml-1">Login 1</span></a>
+                <a class="nav-link pl-3" href="{{ route('admin.users.index') }}"><span class="ml-1">Users List</span></a>
                 <a class="nav-link pl-3" href="./auth-login-half.html"><span class="ml-1">Login 2</span></a>
                 <a class="nav-link pl-3" href="./auth-register.html"><span class="ml-1">Register</span></a>
                 <a class="nav-link pl-3" href="./auth-resetpw.html"><span class="ml-1">Reset Password</span></a>

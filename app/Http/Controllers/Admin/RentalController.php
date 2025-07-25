@@ -65,9 +65,16 @@ class RentalController extends Controller
         $rental->status = 'completed';
         $rental->save();
 
+        $rental->vehicle->status = 'maintenance';
+        $rental->vehicle->save();
+
         return redirect()->route('admin.rentals.index')->with('success', 'Paid Completed.');
     }
-
+    public function showPayment()
+    {
+        $payments = Payment::with(['rental.user', 'rental.vehicle'])->latest()->paginate(10);
+        return view('admin.pages.rentals.payIndex', compact('payments'));
+    }
     public function cancel(Rental $rental)
     {
         $rental->status = 'canceled';
@@ -77,4 +84,5 @@ class RentalController extends Controller
 
         return redirect()->route('admin.rentals.index')->with('success', 'Rental has been canceled.');
     }
+    
 }
