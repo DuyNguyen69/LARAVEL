@@ -22,7 +22,7 @@
                                     class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="text"
                                     placeholder="Search..." value="{{ request()->get('keyword') ?? '' }}">
                                 <div class="form-group mr-2">
-                                    <select name="sort" id="sort" class="form-control">
+                                    <select name="sort" id="sort" class="form-control mr-sm-2">
                                         <option value="">-- Sort by --</option>
                                         <option value="latest" {{ request()->get('sort') === 'latest' ? 'selected' : '' }}>
                                             Newest</option>
@@ -34,6 +34,15 @@
                                         <option value="price_desc"
                                             {{ request()->get('sort') === 'price_desc' ? 'selected' : '' }}>Price: High to
                                             Low</option>
+                                    </select>
+                                    <select name="category_id" class="form-select" onchange="this.form.submit()">
+                                        <option value="">-- Sort by --</option>
+                                        @foreach ($categories as $category)
+                                            <option value="{{ $category->id }}"
+                                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                                {{ $category->name }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -84,9 +93,11 @@
                                                     @case('pending')
                                                         <span class="badge badge-warning">pending</span>
                                                     @break
+
                                                     @case('maintenance')
                                                         <span class="badge badge-danger">Maintenance</span>
                                                     @break
+
                                                     @default
                                                         <span class="badge badge-secondary">Unknow</span>
                                                 @endswitch

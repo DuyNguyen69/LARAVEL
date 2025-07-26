@@ -21,8 +21,8 @@
                 method="get">
                 <input id="keyword" name="keyword" class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted"
                     type="text" placeholder="Find your car..." value="{{ request()->get('keyword') ?? '' }}">
-                <div class="form-group mr-2">
-                    <select name="sort" id="sort" class="form-control">
+                <div class="form-group mr-2 ">
+                    <select name="sort" id="sort" class="form-control mr-sm-2">
                         <option value="">-- Select --</option>
                         <option value="latest" {{ request()->get('sort') === 'latest' ? 'selected' : '' }}>
                             Newest</option>
@@ -34,6 +34,15 @@
                         <option value="price_desc" {{ request()->get('sort') === 'price_desc' ? 'selected' : '' }}>Price:
                             High to
                             Low</option>
+                    </select>
+                    <select name="category_id" class="form-control w-auto " onchange="this.form.submit()">
+                        <option value="">-- Sort by --</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
                     </select>
                 </div>
                 <button class="btn btn-outline-secondary" type="submit">Search</button>
@@ -54,8 +63,10 @@
                                     <p class="price ml-auto">{{ number_format($data->price_per_day) }}₫<span>/day</span>
                                     </p>
                                 </div>
-                                <p class="d-flex mb-0 d-block"><a href="{{ route('client.cars.booking.form') }}" class="btn btn-primary py-2 mr-1">Book  now</a> 
-                                        <a href="{{ route('client.cars.detail', $data->id) }}" class="btn btn-secondary py-2 ml-1">Details</a>
+                                <p class="d-flex mb-0 d-block"><a href="{{ route('client.cars.booking.form') }}"
+                                        class="btn btn-primary py-2 mr-1">Book now</a>
+                                    <a href="{{ route('client.cars.detail', $data->id) }}"
+                                        class="btn btn-secondary py-2 ml-1">Details</a>
                                 </p>
                             </div>
                         </div>

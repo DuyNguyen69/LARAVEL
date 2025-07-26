@@ -26,6 +26,9 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" href="{{ route('client.rentals.index') }}">
+                                My Rentals
+                            </a>
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                 Profile
                             </a>

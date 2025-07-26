@@ -17,6 +17,7 @@ class VehicleController extends Controller
         $itemPerPage = env('ITEM_PER_PAGE', 5);
         $keyword = $request->keyword ?? null;
         $sort = $request->sort ?? 'latest';
+        $categoryId = $request->category_id ?? null;
         switch ($sort) {
             case 'oldest':
                 $column = 'id';
@@ -38,9 +39,12 @@ class VehicleController extends Controller
         if ($keyword) {
             $query->where('name', 'LIKE', "%$keyword%");
         }
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
         $datas = $query->paginate($itemPerPage);
-
-        return view('admin.pages.vehicle.cars_list', ['datas' => $datas, 'itemPerPage' => $itemPerPage]);
+        $categories = Category::all();
+        return view('admin.pages.vehicle.cars_list', ['datas' => $datas, 'itemPerPage' => $itemPerPage, 'categories' => $categories,]);
     }
 
     public function create()
@@ -119,7 +123,7 @@ class VehicleController extends Controller
     public function trash()
     {
         $cars = Vehicle::onlyTrashed()->paginate(10);
-        
+
         return view('admin.pages.vehicle.trash', compact('cars'));
     }
 

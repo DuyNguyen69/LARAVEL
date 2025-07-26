@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\Client\GoogleController;
+use App\Http\Controllers\Client\UserRentalController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/about', 'client.pages.about')->name('about');
@@ -12,6 +13,9 @@ Route::view('/blog_single', 'client.pages.blog_single')->name('blog_single');
 
 Route::get('/google', [GoogleController::class, 'redirect'])->name('google.redirect');
 Route::get('/google/callback', [GoogleController::class, 'callback'])->name('google.callback');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/my-rentals', [UserRentalController::class, 'index'])->name('client.rentals.index');
+});
 
 Route::prefix('client')
     ->controller(ClientController::class)

@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\BookingRequest;
+use App\Mail\AdminBookingNotification;
 use App\Mail\RentalConfirmationMail;
+use App\Models\Category;
 use App\Models\Rental;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
@@ -25,6 +27,7 @@ class ClientController extends Controller
         $itemPerPage = env('ITEM_PER_PAGE', 6);
 
         $keyword = $request->keyword ?? null;
+        $categoryId = $request->category_id ?? null;
         $sort = $request->sort ?? 'latest';
 
         switch ($sort) {
@@ -49,8 +52,12 @@ class ClientController extends Controller
         if ($keyword) {
             $query->where('name', 'LIKE', "%$keyword%");
         }
+        if ($categoryId) {
+            $query->where('category_id', $categoryId);
+        }
         $datas = $query->paginate($itemPerPage);
-        return view('client.pages.cars_list', ['datas' => $datas, 'itemPerPage' => $itemPerPage]);
+        $categories = Category::all();
+        return view('client.pages.cars_list', ['datas' => $datas, 'itemPerPage' => $itemPerPage, 'categories' => $categories,]);
     }
     public function detail(Vehicle $car)
     {
@@ -65,16 +72,16 @@ class ClientController extends Controller
         $user = Auth::user();
         return view('client.pages.booking', [
             'cars' => $cars,
-            'user' =>$user
+            'user' => $user
         ]);
     }
     public function submitBooking(BookingRequest $request)
     {
         $data = $request->validated();
-        
+
         $userId = Auth::check() ? Auth::id() : null;
         $rental = new Rental();
-        $rental->user_id = $userId;// nếu đăng nhập
+        $rental->user_id = $userId; // nếu đăng nhập
         $rental->car_id = $data['car_id'];
         $rental->pickup_date = $data['pickup_date'];
         $rental->dropoff_date = $data['dropoff_date'];
@@ -88,17 +95,16 @@ class ClientController extends Controller
         $rental->delivery_address = $data['delivery_address'] ?? null;
         $rental->status = Rental::STATUS_PENDING;
         $rental->save();
-        
-        Mail::to($rental->user?->email ?? $data['customer_email'])->send(new RentalConfirmationMail($rental));
 
+        Mail::to($rental->user?->email ?? $data['customer_email'])->send(new RentalConfirmationMail($rental));
+        Mail::to('admin@example.com')->send(new AdminBookingNotification($rental));
         $car = Vehicle::find($data['car_id']);
-        
+
         if ($car) {
             $car->status = 'pending';
             $car->save();
         }
 
         return redirect()->route('client.cars.home')->with('booking_success', true);
-
     }
 }
