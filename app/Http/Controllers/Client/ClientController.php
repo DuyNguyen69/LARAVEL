@@ -17,14 +17,13 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $cars = Vehicle::pagiante(9);
+        $cars = Vehicle::latest()->get();
 
         return view('client.pages.home', compact('cars'));
     }
     public function show(Request $request)
     {
 
-        $itemPerPage = env('ITEM_PER_PAGE', 6);
 
         $keyword = $request->keyword ?? null;
         $categoryId = $request->category_id ?? null;
@@ -55,9 +54,9 @@ class ClientController extends Controller
         if ($categoryId) {
             $query->where('category_id', $categoryId);
         }
-        $datas = $query->paginate($itemPerPage);
+        $datas = $query->paginate(6)->withQueryString();
         $categories = Category::all();
-        return view('client.pages.cars_list', ['datas' => $datas, 'itemPerPage' => $itemPerPage, 'categories' => $categories,]);
+        return view('client.pages.cars_list', ['datas' => $datas, 'categories' => $categories,]);
     }
     public function detail(Vehicle $car)
     {
