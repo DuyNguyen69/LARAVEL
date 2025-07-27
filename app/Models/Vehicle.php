@@ -22,5 +22,7 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Category::class, 'category_id');
     }
-    
+    public function Payment(){
+        return $this->belongsTo(Payment::class);
+    }
 }

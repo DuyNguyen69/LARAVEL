@@ -2,15 +2,7 @@
         <button type="button" class="navbar-toggler text-muted mt-2 p-0 mr-3 collapseSidebar">
           <i class="fe fe-menu navbar-toggler-icon"></i>
         </button>
-        <form class="form-inline mr-auto searchform text-muted">
-          <input class="form-control mr-sm-2 bg-transparent border-0 pl-4 text-muted" type="search" placeholder="Type something..." aria-label="Search">
-        </form>
         <ul class="nav">
-          <li class="nav-item">
-            <a class="nav-link text-muted my-2" href="#" id="modeSwitcher" data-mode="light">
-              <i class="fe fe-sun fe-16"></i>
-            </a>
-          </li>
           <li class="nav-item">
             <a class="nav-link text-muted my-2" href="./#" data-toggle="modal" data-target=".modal-shortcut">
               <span class="fe fe-grid fe-16"></span>
@@ -25,7 +17,7 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-muted pr-0" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="avatar avatar-sm mt-2">
-                <img src="./assets/avatars/face-1.jpg" alt="..." class="avatar-img rounded-circle">
+                <img src="./assets/" alt="..." class="avatar-img rounded-circle">
               </span>
             </a>
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
@@ -44,7 +36,7 @@
         <nav class="vertnav navbar navbar-light">
           <!-- nav bar -->
           <div class="w-100 mb-4 d-flex">
-            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="./index.html">
+            <a class="navbar-brand mx-auto mt-2 flex-fill text-center" href="{{ route('admin.dashboard') }}">
               <svg version="1.1" id="logo" class="navbar-brand-img brand-sm" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 120 120" xml:space="preserve">
                 <g>
                   <polygon class="st0" points="78,105 15,105 24,87 87,87 	" />
@@ -56,9 +48,9 @@
           </div>
           <ul class="navbar-nav flex-fill w-100 mb-2">
             <li class="nav-item dropdown">
-              <a href="#dashboard" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle nav-link">
+              <a href="{{ route('admin.dashboard') }}" aria-expanded="false" class=" nav-link">
                 <i class="fe fe-home fe-16"></i>
-                <span class="ml-3 item-text">Dashboard</span><span class="sr-only">(current)</span>
+                <span class="ml-3 item-text">Dashboard</span>
               </a>
             </li>
           </ul>
@@ -73,6 +65,11 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100 w-100" id="pages">
                 <li class="nav-item">
+                  <a class="nav-link pl-3" href="{{ route('admin.vehicle.create') }}">
+                    <span class="ml-1 item-text">Create</span>
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link pl-3" href="{{ route('admin.vehicle.index') }}">
                     <span class="ml-1 item-text">Cars List</span>
                   </a>
@@ -80,11 +77,6 @@
                 <li class="nav-item">
                   <a class="nav-link pl-3" href="{{ route('admin.rentals.index') }}">
                     <span class="ml-1 item-text">Rentals</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-3" href="">
-                    <span class="ml-1 item-text">Engineer</span>
                   </a>
                 </li>
                 <li class="nav-item">
@@ -106,22 +98,7 @@
               </a>
               <ul class="collapse list-unstyled pl-4 w-100" id="auth">
                 <a class="nav-link pl-3" href="{{ route('admin.users.index') }}"><span class="ml-1">Users List</span></a>
-                <a class="nav-link pl-3" href="./auth-login-half.html"><span class="ml-1">Login 2</span></a>
-                <a class="nav-link pl-3" href="./auth-register.html"><span class="ml-1">Register</span></a>
-                <a class="nav-link pl-3" href="./auth-resetpw.html"><span class="ml-1">Reset Password</span></a>
-                <a class="nav-link pl-3" href="./auth-confirm.html"><span class="ml-1">Confirm Password</span></a>
               </ul>
-            </li>
-          </ul>
-          <p class="text-muted nav-heading mt-4 mb-1">
-            <span>Documentation</span>
-          </p>
-          <ul class="navbar-nav flex-fill w-100 mb-2">
-            <li class="nav-item w-100">
-              <a class="nav-link" href="../docs/index.html">
-                <i class="fe fe-help-circle fe-16"></i>
-                <span class="ml-3 item-text">Getting Start</span>
-              </a>
             </li>
           </ul>
         </nav>

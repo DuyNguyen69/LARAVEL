@@ -9,8 +9,8 @@
                     <h5>Rental Info</h5>
                     <p><strong>Customer:</strong> {{ $rental->user->name }} ({{ $rental->user->email }})</p>
                     <p><strong>Car:</strong> {{ $rental->vehicle->name }}</p>
-                    <p><strong>Pickup:</strong> {{ $rental->start_date }} {{ $rental->pickup_time }}</p>
-                    <p><strong>Drop-off:</strong> {{ $rental->end_date }} {{ $rental->dropoff_time }}</p>
+                    <p><strong>Pickup:</strong> {{ $rental->pickup_date }} {{ $rental->pickup_time }}</p>
+                    <p><strong>Drop-off:</strong> {{ $rental->dropoff_date }} {{ $rental->dropoff_time }}</p>
                     @if ($rental->pickup_location)
                         <p><strong>Address:</strong> {{ $rental->pickup_location }}</p>
                     @endif
@@ -24,15 +24,15 @@
                         <form method="POST" action="{{ route('admin.rentals.markAsPaid', $rental) }}">
                             @csrf
                             @method('PUT')
-                            <button type="submit" class="btn btn-primary">Payment</button>
-
-                            <!-- Hiển thị tiền -->
                             @if ($rental->dropoff_time)
                                 <p class="mt-3">
                                     <strong>Total:</strong>
                                     {{ number_format($rental->calculateTotal(), 0, ',', '.') }}₫
                                 </p>
                             @endif
+                            <button type="submit" class="btn btn-success btn-lg w-100 shadow rounded-pill py-3">
+                                <i class="fas fa-credit-card me-2"></i> Pay Now
+                            </button>
                         </form>
                     @else
                         <div class="alert alert-success mt-3">Rental has been paid.</div>
@@ -44,4 +44,16 @@
         <a href="{{ route('admin.rentals.index') }}" class="btn btn-link mt-3">← Back to Rentals</a>
     </div>
 @endsection
+@push('styles')
+    <style>
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
 
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+    </style>
+@endpush

@@ -1,18 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\RentalController;
-use App\Http\Controllers\Client\GoogleController;
 use App\Http\Controllers\Admin\VehicleController;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Middleware\CheckIsAdmin;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/admin/home',function(){
-//     return view('admin.pages.dashboard');
-// });
-// Route::get('/admin/create',function(){
-//     return view('admin.pages.vehicle.create');
-// });
+
 
 Route::prefix('admin/vehicle')
     ->controller(VehicleController::class)
@@ -38,12 +33,21 @@ Route::prefix('admin')
         Route::get('rentals', 'index')->name('index');
         Route::put('rentals/{rental}/confirm', 'confirm')->name('confirm');
         Route::get('rentals/{rental}/detail', 'detail')->name('detail');
-        Route::put('rentals/{rental}','update')->name('update');
+        Route::put('rentals/{rental}', 'update')->name('update');
         Route::get('rentals/{rental}/payment', 'payment')->name('payment');
         Route::post('rentals/{rental}/calculate-total', 'calculateTotalAjax')->name('calculateTotal');
         Route::put('rentals/{rental}/payment', 'markAsPaid')->name('markAsPaid');
         Route::put('rentals/{rental}/cancel', 'cancel')->name('cancel');
-        Route::get('payments','showPayment')->name('payments.index');
-
+        Route::get('payments', 'showPayment')->name('payments.index');
     });
-Route::get('/admin/users', [UserController::class, 'index'])->name('admin.users.index')->middleware(CheckIsAdmin::class);
+
+Route::prefix('admin')
+    ->controller(UserController::class)
+    ->name('admin.users.')
+    ->middleware(CheckIsAdmin::class)
+    ->group(function () {
+        Route::get('users',  'index')->name('index');
+        Route::delete('users/{user_id}', 'destroy')->name('destroy');
+        Route::patch('users/{user_id}/toggle-role', 'toggleRole')->name('toggleRole');
+    });
+Route::get('admin/dashboard', [DashboardController::class, 'chartData'])->name('admin.dashboard')->middleware(CheckIsAdmin::class);

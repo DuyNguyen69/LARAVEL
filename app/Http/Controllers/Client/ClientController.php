@@ -17,7 +17,7 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $cars = Vehicle::get();
+        $cars = Vehicle::pagiante(9);
 
         return view('client.pages.home', compact('cars'));
     }

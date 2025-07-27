@@ -29,7 +29,7 @@
                         <td>{{ $payment->rental_id }}</td>
                         <td>{{ $payment->rental->user->name ?? '-' }}</td>
                         <td>{{ $payment->rental->vehicle->name ?? '-' }}</td>
-                        <td>{{ number_format($payment->amount, 0, ',', '.') }}₫</td>
+                        <td>{{ number_format($payment->total_price, 0, ',', '.') }}₫</td>
                         <td>
                             @if ($payment->status === 'paid')
                                 <span class="badge bg-success">Paid</span>

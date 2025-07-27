@@ -8,8 +8,8 @@
 
             @if (session('success'))
                 <div class="alert alert-success">{{ session('success') }}</div>
-            @elseif (session('info'))
-                <div class="alert alert-success">{{ session('info') }}</div>
+            @elseif (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
             @endif
 
             @if ($errors->any())
@@ -52,35 +52,41 @@
                 <div class="col-md-6">
                     <label class="form-label">Pickup Date</label>
                     <input type="date" name="pickup_date" class="form-control"
-                        value="{{ old('pickup_date',$rental->pickup_date) }}">
+                        value="{{ old('pickup_date', $rental->pickup_date) }}"
+                        {{ in_array($rental->status, ['confirmed', 'completed','canceled']) ? 'disabled' : '' }}>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Pickup Time</label>
                     <input type="time" name="pickup_time" class="form-control"
-                        value="{{ old('pickup_time', \Carbon\Carbon::parse($rental->pickup_time)->format('H:i')) }}">
+                        value="{{ old('pickup_time', \Carbon\Carbon::parse($rental->pickup_time)->format('H:i')) }}"
+                        {{ in_array($rental->status, ['confirmed', 'completed','canceled']) ? 'disabled' : '' }}>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Drop-off Date</label>
                     <input type="date" name="dropoff_date" class="form-control"
-                        value="{{ old('dropoff_date',$rental->dropoff_date) }}">
+                        value="{{ old('dropoff_date', $rental->dropoff_date) }}"
+                        {{ in_array($rental->status, ['confirmed', 'completed','canceled']) ? 'disabled' : '' }}>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Drop-off Time</label>
                     <input type="time" name="dropoff_time" class="form-control"
-                        value="{{ old('dropoff_time', \Carbon\Carbon::parse($rental->dropoff_time)->format('H:i')) }}">
+                        value="{{ old('dropoff_time', \Carbon\Carbon::parse($rental->dropoff_time)->format('H:i')) }}"
+                        {{ in_array($rental->status, ['confirmed', 'completed','canceled']) ? 'disabled' : '' }}>
                 </div>
 
                 {{-- Location --}}
                 <div class="col-md-12">
                     <label class="form-label">Delivery Address (optional)</label>
                     <input type="text" name="delivery_address" class="form-control"
-                        value="{{ old('delivery_address', $rental->delivery_address) }}">
+                        value="{{ old('delivery_address', $rental->delivery_address) }}"
+                        {{ in_array($rental->status, ['confirmed', 'completed','canceled']) ? 'disabled' : '' }}>
                 </div>
 
                 {{-- Status --}}
                 <div class="col-md-6">
                     <label class="form-label">Status</label>
-                    <select name="status" class="form-select" disabled>
+                    <select name="status" class="form-select" disabled
+                        {{ in_array($rental->status, ['confirmed', 'completed','canceled']) ? 'disabled' : '' }}>
                         <option value="pending" {{ $rental->status === 'pending' ? 'selected' : '' }}>Pending</option>
                         <option value="confirmed" {{ $rental->status === 'confirmed' ? 'selected' : '' }}>Confirmed
                         </option>
@@ -92,7 +98,9 @@
 
                 {{-- Save Button --}}
                 <div class="col-12 mt-3">
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                    @if (!in_array($rental->status, ['confirmed', 'completed','canceled']))
+                        <button type="submit" class="btn btn-success">Save Changes</button>
+                    @endif
                     <a href="{{ route('admin.rentals.index') }}" class="btn btn-secondary">Back to List</a>
                 </div>
             </form>
