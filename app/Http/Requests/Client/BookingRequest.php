@@ -25,7 +25,7 @@ class BookingRequest extends FormRequest
             'customer_name' => 'required|string|max:255',
             'customer_phone' => 'required|string|min:10|max:15',
             'customer_email' => 'required|email',
-            'customer_id_number' => 'required|string|max:50',
+            'customer_id_number' => 'required|string|min:10|max:15',
             'delivery_option' => 'required|in:pickup_self,delivery_to_location',
             'delivery_address' => 'required_if:delivery_option,delivery_to_location|max:255',
             'pickup_date' => 'required|date|after_or_equal:today',
