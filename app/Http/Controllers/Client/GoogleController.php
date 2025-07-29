@@ -32,7 +32,7 @@ class GoogleController extends Controller
         
         Auth::login($user);
         if ($user->role == 1) {
-            return redirect(route('admin.vehicle.index'));
+            return redirect(route('admin.dashboard'));
         }
         return redirect(route('client.cars.home', absolute: false));
     }

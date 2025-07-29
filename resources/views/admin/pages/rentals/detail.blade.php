@@ -29,11 +29,11 @@
                 {{-- Customer Info --}}
                 <div class="col-md-6">
                     <label class="form-label">Customer Name</label>
-                    <input type="text" class="form-control" value="{{ $rental->user->name }}" disabled>
+                    <input type="text" class="form-control" value="{{ $rental->customer_name }}" disabled>
                 </div>
                 <div class="col-md-6">
                     <label class="form-label">Customer Email</label>
-                    <input type="text" class="form-control" value="{{ $rental->user->email }}" disabled>
+                    <input type="text" class="form-control" value="{{ $rental->customer_email }}" disabled>
                 </div>
 
                 {{-- Vehicle Info --}}

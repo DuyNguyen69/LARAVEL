@@ -11,7 +11,7 @@
 
             <table class="table table-bordered table-striped">
                 <thead class="table-dark">
-                    <tr>
+                    <tr >
                         <th>#</th>
                         <th>User</th>
                         <th>Car</th>
@@ -24,9 +24,9 @@
                 </thead>
                 <tbody>
                     @foreach ($rentals as $rental)
-                        <tr>
+                        <tr class="{{ $rental->is_read ? '' : 'bg-secondary' }}">
                             <td>{{ $rental->id }}</td>
-                            <td>{{ $rental->user->name }}</td>
+                            <td>{{ $rental->customer_name ?? 'Underfine' }}</td>
                             <td>{{ $rental->vehicle->name ?? 'No vehicle assigned' }}</td>
                             <td>{{ $rental->pickup_date }} {{ $rental->pickup_time }}</td>
                             <td>{{ $rental->dropoff_date }} {{ $rental->dropoff_time }}</td>

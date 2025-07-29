@@ -11,7 +11,7 @@ class Payment extends Model
 
     protected $fillable = [
         'rental_id',
-        'amount',
+        'total_price',
         'status',
         'paid_at',
     ];

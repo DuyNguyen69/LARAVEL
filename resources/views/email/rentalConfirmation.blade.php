@@ -11,6 +11,7 @@
     <li><strong>Số điện thoại:</strong> {{ $rental->customer_phone }}</li>
     <li><strong>CMND/CCCD:</strong> {{ $rental->customer_id_number }}</li>
     <li><strong>Hình thức giao nhận:</strong> {{ $rental->delivery_option == 'delivery_to_location' ? 'Giao tận nơi' : 'Tự đến lấy' }}</li>
+    <li><strong>Tổng tiền dự tính: {{ number_format($rental->calculatetotal(), 0, ',', '.') }}₫ VND</strong></li>
     @if ($rental->delivery_address)
         <li><strong>Địa chỉ giao xe:</strong> {{ $rental->delivery_address }}</li>
     @endif

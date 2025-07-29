@@ -26,6 +26,7 @@
                 <span style="color: green">Book</span>
             </a>
         </div>
+        <a style="color: white" href="{{ route('client.cars.home') }}">Back to home</a>
         <div
             class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
             <h2>My Rental Orders</h2>
@@ -33,26 +34,29 @@
             @if ($rentals->isEmpty())
                 <p>You haven't booked any cars yet.</p>
             @else
-                <table class="table">
-                    <thead>
+            <table class="min-w-full divide-y divide-gray-200 text-sm text-left">
+                <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="px-4 py-2">Vehicle</th>
+                        <th class="px-4 py-2">Pickup</th>
+                        <th class="px-4 py-2">Dropoff</th>
+                        <th class="px-4 py-2">Status</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    @foreach ($rentals as $rental)
                         <tr>
-                            <th>Vehicle</th>
-                            <th>Pickup</th>
-                            <th>Dropoff</th>
-                            <th>Status</th>
+                            <td class="px-4 py-2">{{ $rental->vehicle->name ?? 'N/A' }}</td>
+                            <td class="px-4 py-2">{{ $rental->pickup_date }} {{ $rental->pickup_time }}</td>
+                            <td class="px-4 py-2">{{ $rental->dropoff_date }} {{ $rental->dropoff_time }}</td>
+                            <td class="px-4 py-2">{{ ucfirst($rental->status) }}</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($rentals as $rental)
-                            <tr>
-                                <td>{{ $rental->vehicle->name ?? 'N/A' }}</td>
-                                <td>{{ $rental->pickup_date }} {{ $rental->pickup_time }}</td>
-                                <td>{{ $rental->dropoff_date }} {{ $rental->dropoff_time }}</td>
-                                <td>{{ ucfirst($rental->status) }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                    @endforeach
+                </tbody>
+            </table>
+            <div class="card-footer clearfix">
+                {{ $rentals->links('pagination::tailwind') }}
+            </div>
             @endif
         </div>
     </div>

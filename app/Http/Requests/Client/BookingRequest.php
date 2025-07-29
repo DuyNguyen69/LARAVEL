@@ -35,4 +35,16 @@ class BookingRequest extends FormRequest
             'car_id' => 'required|exists:cars,id',
         ];
     }
+    public function messages()
+    {
+        return [
+            'car_id.required' => 'You must select a car.',
+            'car_id.exists' => 'The selected car is invalid.',
+            'delivery_address.required_if' => 'The delivery address is required when delivery option is selected.',
+            'pickup_date.after_or_equal' => 'The pickup date must be today or a future date.',
+            'dropoff_date.after' => 'The drop-off date must be after the pickup date.',
+            'pickup_time.date_format' => 'Pickup time must be in HH:MM format.',
+            'dropoff_time.date_format' => 'Drop-off time must be in HH:MM format.',
+        ];
+    }
 }

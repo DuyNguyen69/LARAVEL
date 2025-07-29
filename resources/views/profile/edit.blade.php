@@ -21,7 +21,16 @@
 
             <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
                 <div class="max-w-xl">
+                    @if ($user->role == 0)
                     @include('profile.partials.delete-user-form')
+                    @else
+                    <x-danger-button class="ms-3">
+                        <a href="{{route('admin.dashboard')}}">Back to AdminPage</a>
+                    </x-danger-button>
+                    @endif
+                    
+
+
                 </div>
             </div>
         </div>

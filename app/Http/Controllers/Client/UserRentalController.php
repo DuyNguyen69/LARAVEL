@@ -12,9 +12,7 @@ class UserRentalController extends Controller
 {
     $rentals = Rental::where('user_id', auth()->id())
         ->with('vehicle') 
-        ->latest()
-        ->get();
-
+        ->paginate(5);
     return view('client.pages.index', compact('rentals'));
 }
 }

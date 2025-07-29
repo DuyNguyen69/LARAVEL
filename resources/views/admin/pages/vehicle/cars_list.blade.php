@@ -49,8 +49,8 @@
                             </form>
                         </div>
                         <div class="card-body">
-                            <table class="table datatables">
-                                <thead>
+                            <table class="table table-bordered table-striped">
+                                <thead class="table-dark">
 
                                     <th>#</th>
                                     <th>Name</th>
@@ -136,7 +136,7 @@
                             </table>
                         </div>
                         <div class="card-footer clearfix">
-                            {{ $datas->appends(request()->all())->links() }}
+                            {{ $datas->links() }}
                         </div>
                     </div>
                 </div>

@@ -15,7 +15,10 @@ class RentalController extends Controller
 
     public function index()
     {
+        Rental::where('is_read', false)->update(['is_read' => true]);
+        
         $rentals = Rental::with('vehicle', 'user')->latest()->paginate(5);
+
         return view('admin.pages.rentals.index', compact('rentals'));
     }
 
@@ -50,10 +53,10 @@ class RentalController extends Controller
 
     public function markAsPaid(Rental $rental)
     {
-        // Tính lại tiền
+       
         $total_price = $rental->calculateTotal();
 
-        // Tạo bản ghi payment
+        
         Payment::create([
             'rental_id' => $rental->id,
             'total_price' => $total_price,
@@ -61,11 +64,11 @@ class RentalController extends Controller
             'status' => 'paid',
         ]);
 
-        // Đánh dấu đơn thuê đã thanh toán
+        
         $rental->status = 'completed';
         $rental->save();
 
-        $rental->vehicle->status = 'maintenance';
+        $rental->vehicle->status = 'available';
         $rental->vehicle->save();
 
         return redirect()->route('admin.rentals.index')->with('success', 'Payment Successfull.');

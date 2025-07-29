@@ -7,7 +7,7 @@
         <div class="container">
             <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
                 <div class="col-md-9 ftco-animate pb-5">
-                    <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i
+                    <p class="breadcrumbs"><span class="mr-2"><a href="{{route('client.cars.home')}}">Home <i
                                     class="ion-ios-arrow-forward"></i></a></span> <span>Booking <i
                                 class="ion-ios-arrow-forward"></i></span></p>
                     <h1 class="mb-3 bread">Booking</h1>
@@ -100,7 +100,7 @@
 
                         <div class="form-group mb-3">
                             <label for="pickup_time">Pick-up Time</label>
-                            <input type="time" name="pickup_time" class="form-control" value="{{ old('pickup_time') }}">
+                            <input type="time" name="pickup_time" class="form-control" value="{{ old('pickup_time') }}" placeholder="00:00">
                         </div>
                         @error('pickup_time')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -108,7 +108,7 @@
                         <div class="form-group mb-3">
                             <label for="dropoff_time">Drop-off Time</label>
                             <input type="time" name="dropoff_time" class="form-control"
-                                value="{{ old('dropoff_time') }}">
+                                value="{{ old('dropoff_time') }}" placeholder="00:00">
                         </div>
                         @error('dropoff_time')
                             <div class="alert alert-danger">{{ $message }}</div>

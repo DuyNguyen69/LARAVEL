@@ -300,7 +300,7 @@
                 </div>
                 <div class="col-md-4 d-flex ftco-animate">
                     <div class="blog-entry justify-content-end">
-                        <a href="blog-single.html" class="block-20" style="background-image: url('images/image_2.jpg');">
+                        <a href="blog-single.html" class="block-20" style="background-image: url('{{asset('images/image_2.jpg')}}');">
                         </a>
                         <div class="text pt-4">
                             <div class="meta mb-3">
@@ -316,7 +316,7 @@
                 </div>
                 <div class="col-md-4 d-flex ftco-animate">
                     <div class="blog-entry">
-                        <a href="blog-single.html" class="block-20" style="background-image: url('images/image_3.jpg');">
+                        <a href="blog-single.html" class="block-20" style="background-image: url('{{asset('images/image_3.jpg')}}');">
                         </a>
                         <div class="text pt-4">
                             <div class="meta mb-3">
@@ -377,12 +377,15 @@
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content text-center p-4">
-                <div class="spinner-border text-success mb-3" role="status" id="bookingSpinner"
-                    style="width: 4rem; height: 4rem;"></div>
-                <div id="bookingCheck" class="d-none text-success mb-3" style="font-size: 3rem;">
-                    <h4>Rented Successfull</h4>
+
+                <div id="bookingSpinner" class="mb-3">
+                    <div class="spinner-border text-success" role="status" style="width: 4rem; height: 4rem;"></div>
+                    <h4 class="mt-3">Processing...</h4>
                 </div>
-                <h5 class="modal-title mb-2" id="bookingSuccessModalLabel">Please Check Your Email!</h5>
+                <div id="bookingCheck" class="d-none text-success mb-3">
+                    <i class="fas fa-check-circle" style="font-size: 4rem;"></i>
+                    <h4 class="mt-2">Please Check Your Email !!</h4>
+                </div>
             </div>
         </div>
     </div>
@@ -393,11 +396,21 @@
     @if (session('booking_success'))
         <script>
             document.addEventListener('DOMContentLoaded', function() {
-                const myModal = new bootstrap.Modal(document.getElementById('bookingSuccessModal'));
-                myModal.show();
+                const bookingModalEl = document.getElementById('bookingSuccessModal');
+
+                if (bookingModalEl) {
+                    const myModal = new bootstrap.Modal(bookingModalEl);
+                    myModal.show();
+
+                    setTimeout(() => {
+                        document.getElementById('bookingSpinner')?.classList.add('d-none');
+                        document.getElementById('bookingCheck')?.classList.remove('d-none');
+                    }, 1000);
+                }
             });
         </script>
     @endif
+
     <script>
         $(document).ready(function() {
             $('.carousel-car').owlCarousel({

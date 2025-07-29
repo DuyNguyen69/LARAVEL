@@ -45,27 +45,27 @@ class Rental extends Model
     }
     public function calculateTotal(): float
 {
-    $pickup = \Carbon\Carbon::parse($this->pickup_date_date . ' ' . $this->pickup_time);
+    $pickup = \Carbon\Carbon::parse($this->pickup_date . ' ' . $this->pickup_time);
     $dropoff = \Carbon\Carbon::parse($this->dropoff_date . ' ' . $this->dropoff_time);
 
-    $durationDays = ceil($pickup->floatDiffInHours($dropoff) / 24); // luôn làm tròn lên ngày
+    $durationDays = ceil($pickup->floatDiffInHours($dropoff) / 24);
 
     $pricePerDay = $this->vehicle->price_per_day;
-    $total = $pricePerDay * $durationDays;
+    $total_price = $pricePerDay * $durationDays;
 
     // Giảm giá nếu thuê dài ngày
     if ($durationDays >= 7) {
-        $total *= 0.9; // giảm 10%
+        $total_price *= 0.9; // giảm 10%
     } elseif ($durationDays >= 3) {
-        $total *= 0.95; // giảm 5%
+        $total_price *= 0.95; // giảm 5%
     }
 
     // Phụ phí giao xe nếu có
     if (!empty($this->delivery_address)) {
-        $total += 100_000;
+        $total_price += 100_000;
     }
 
-    return $total;
+    return $total_price;
 }
 public function getStatusColorAttribute()
 {

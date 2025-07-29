@@ -14,7 +14,6 @@ class VehicleController extends Controller
 {
     public function index(Request $request)
     {
-        $itemPerPage = env('ITEM_PER_PAGE', 5);
         $keyword = $request->keyword ?? null;
         $sort = $request->sort ?? 'latest';
         $categoryId = $request->category_id ?? null;
@@ -42,9 +41,9 @@ class VehicleController extends Controller
         if ($categoryId) {
             $query->where('category_id', $categoryId);
         }
-        $datas = $query->paginate($itemPerPage);
+        $datas = $query->paginate(6);
         $categories = Category::all();
-        return view('admin.pages.vehicle.cars_list', ['datas' => $datas, 'itemPerPage' => $itemPerPage, 'categories' => $categories,]);
+        return view('admin.pages.vehicle.cars_list', ['datas' => $datas, 'categories' => $categories,]);
     }
 
     public function create()

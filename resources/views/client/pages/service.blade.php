@@ -67,8 +67,8 @@
 			<div class="container">
 				<div class="row justify-content-end">
 					<div class="col-md-6 heading-section heading-section-white ftco-animate">
-            <h2 class="mb-3">Do You Want To Earn With Us? So Don't Be Late.</h2>
-            <a href="#" class="btn btn-primary btn-lg">Become A Driver</a>
+            <h2 class="mb-3">Do You Want To Join With Us? So Don't Be Late.</h2>
+            <a href="{{route('login')}}" class="btn btn-primary btn-lg">Become Member</a>
           </div>
 				</div>
 			</div>

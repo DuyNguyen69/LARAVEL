@@ -93,10 +93,11 @@ class ClientController extends Controller
         $rental->delivery_option = $data['delivery_option'];
         $rental->delivery_address = $data['delivery_address'] ?? null;
         $rental->status = Rental::STATUS_PENDING;
+        $rental->is_read =0;
         $rental->save();
 
         Mail::to($rental->user?->email ?? $data['customer_email'])->send(new RentalConfirmationMail($rental));
-        Mail::to('admin@example.com')->send(new AdminBookingNotification($rental));
+        Mail::to('duythai0699@gmail.com')->send(new AdminBookingNotification($rental));
         $car = Vehicle::find($data['car_id']);
 
         if ($car) {
